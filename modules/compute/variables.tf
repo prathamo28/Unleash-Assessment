@@ -13,6 +13,11 @@ variable "cognito_user_pool_id" {
   type        = string
 }
 
+variable "cognito_user_pool_client_id" {
+  description = "App client ID for the Cognito User Pool in us-east-1"
+  type        = string
+}
+
 variable "user_email" {
   description = "User email for SNS payloads"
   type        = string
