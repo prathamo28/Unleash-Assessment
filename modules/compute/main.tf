@@ -255,3 +255,4 @@ resource "aws_lambda_function" "dispatcher" {
     }
   }
 }
+
