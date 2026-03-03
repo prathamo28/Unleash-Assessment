@@ -192,21 +192,21 @@ resource "aws_ecs_task_definition" "sns_publisher" {
       name      = "sns-publisher"
       image     = "amazon/aws-cli:latest"
       essential = true
+      # Default entrypoint is "aws", so we just pass CLI args
       command   = [
-        "sh",
-        "-c",
-        "aws sns publish --region us-east-1 --topic-arn ${var.sns_topic_arn} --message \"$SNS_PAYLOAD\" && echo 'done'"
-      ]
-      environment = [
-        {
-          name  = "SNS_PAYLOAD"
-          value = jsonencode({
-            email  = var.user_email
-            source = "ECS"
-            region = var.region
-            repo   = var.github_repo
-          })
-        }
+        "sns",
+        "publish",
+        "--region",
+        "us-east-1",
+        "--topic-arn",
+        var.sns_topic_arn,
+        "--message",
+        jsonencode({
+          email  = var.user_email
+          source = "ECS"
+          region = var.region
+          repo   = var.github_repo
+        })
       ]
       logConfiguration = {
         logDriver = "awslogs"
